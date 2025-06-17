@@ -5,12 +5,13 @@
 package models;
 
 import java.util.Date;
-
+import java.sql.Timestamp;
 /**
  *
  * @author I2S
  */
 public class Reservations {
+    
     private int reservation_id ;
     private int user_id  ;
     private String client_name  ;
@@ -20,7 +21,7 @@ public class Reservations {
     private Date check_in_date ;
     private Date check_out_date ;
     private String 	status ;
-    private Date 	created_at ;
+    private Timestamp	created_at ;
 
     public Reservations(int user_id, String client_name, String client_email, String client_phone, int room_id, Date check_in_date, Date check_out_date, String status) {
         this.user_id = user_id;
@@ -44,12 +45,10 @@ public class Reservations {
         this.check_in_date = check_in_date;
         this.check_out_date = check_out_date;
         this.status = status;
-        this.created_at = created_at;
+        
     }
 
-    public Reservations(int aInt, int aInt0, String string, String string0, String string1, int aInt1, java.sql.Date date, java.sql.Date date0, String string2) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+   
 
     public int getReservation_id() {
         return reservation_id;
@@ -127,7 +126,7 @@ public class Reservations {
         return created_at;
     }
 
-    public void setCreated_at(Date created_at) {
+    public void setCreated_at(Timestamp created_at) {
         this.created_at = created_at;
     }
     

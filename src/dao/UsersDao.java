@@ -19,7 +19,7 @@ import models.Users;
 public class UsersDao {
     static final String sql_insert="INSERT INTO `users` ( `username`, `password`, `role`, `full_name`, `email`, `phone`) VALUES ( ?, ?,?,?,?,?);";
     static final String sql_select="SELECT * FROM `users` WHERE 1";
-    static final String sql_selectbyname="SELECT * FROM `users` WHERE user_id=?";
+    static final String sql_selectbyusername="SELECT * FROM `users` WHERE username = ?";
     static final String sql_update="UPDATE `users` SET `username` = ?, `password` = ?, `full_name` = ?, `email` = ?, `phone` = ? WHERE `users`.`user_id` = ?;";
     static final String sql_recherchebyname = "SELECT * FROM `users` WHERE full_name LIKE '%?%'";
     //    Cette methode permet de creer d'utilisateur
@@ -41,9 +41,9 @@ public class UsersDao {
         }
         return users;
     }
-//    cette methode permet de selectionner un utilisateur par son id
-    public static Users selectusersbyid(Users u) throws SQLException, ClassNotFoundException{
-        ResultSet rs=DatabaseService.executeQuery(sql_selectbyname,u.getUser_id());
+//    cette methode permet de selectionner un utilisateur par son username
+    public static Users selectusersbyusername(String u) throws SQLException, ClassNotFoundException{
+        ResultSet rs=DatabaseService.executeQuery(sql_selectbyusername,u);
        
         if(rs.next()){
           return convertuserstoResultset(rs);

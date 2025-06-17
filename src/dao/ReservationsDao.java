@@ -20,7 +20,7 @@ public class ReservationsDao {
     static final String sql_insert = "INSERT INTO `reservations` (`user_id`, `client_name`, `client_email`, `client_phone`, `room_id`, `check_in_date`, `check_out_date`, `status`) VALUES (?, ?,?,? ,?, ?,?,?)";
     static final String sql_select = "SELECT * FROM `reservations`";
     static final String sql_selectbyid = "SELECT * FROM `reservations where reservation_id=? `";
-    static final String sql_update = "UPDATE `reservations` SET `user_id` = ? `client_name` = ?, `client_email` = ?, `client_phone` = ?, `room_id` = ?, `check_in_date` = ?, `check_out_date` = ?, `status` =? WHERE `reservations`.`reservation_id` =?";
+    static final String sql_update = "UPDATE `reservations` SET `user_id` = ?, `client_name` = ?, `client_email` = ?, `client_phone` = ?, `room_id` = ?, `check_in_date` = ?, `check_out_date` = ?, `status` =? WHERE `reservations`.`reservation_id` =?";
     static final String sql_delete = " DELETE FROM reservations WHERE `reservations`.`reservation_id` = ?";
     static final String sql_recherchebyname = "SELECT * FROM `reservations` WHERE client_name LIKE '%?%'";
 
