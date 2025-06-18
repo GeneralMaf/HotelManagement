@@ -187,7 +187,6 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel2.setText("87/245");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photos/Empty Bed.png"))); // NOI18N
-        jLabel3.setText("c");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

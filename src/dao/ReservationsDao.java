@@ -26,7 +26,7 @@ public class ReservationsDao {
 
     //    cette methode permet de creer une reservation
     static public Reservations cratereservation(Reservations r) throws SQLException, ClassNotFoundException {
-        long idinserted = DatabaseService.executeInsertWithGeneratedKey(sql_insert, r.getUser_id(), r.getClient_name(), r.getClient_email(), r.getClient_phone(), r.getRoom_id(), r.getCheck_in_date(), r.getCheck_out_date());
+        long idinserted = DatabaseService.executeInsertWithGeneratedKey(sql_insert, r.getUser_id(), r.getClient_name(), r.getClient_email(), r.getClient_phone(), r.getRoom_id(), r.getCheck_in_date(), r.getCheck_out_date(),r.getStatus());
         r.setReservation_id((int) idinserted);
         return r;
     }

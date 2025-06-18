@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/I2S/Documents/NetBeansProjects/hotel_management/src/models/Reservations.java</file>
             <file>file:/C:/Users/I2S/Documents/NetBeansProjects/hotel_management/src/ui/UtilsFonction.java</file>
-            <file>file:/C:/Users/I2S/Documents/NetBeansProjects/hotel_management/src/dao/ReservationsDao.java</file>
             <file>file:/C:/Users/I2S/Documents/NetBeansProjects/hotel_management/src/ui/Reservation.java</file>
-            <file>file:/C:/Users/I2S/Documents/NetBeansProjects/hotel_management/src/ui/MessSupp.java</file>
+            <file>file:/C:/Users/I2S/Documents/NetBeansProjects/hotel_management/src/dao/RoomsDao.java</file>
+            <file>file:/C:/Users/I2S/Documents/NetBeansProjects/hotel_management/src/ui/Chambre.java</file>
+            <file>file:/C:/Users/I2S/Documents/NetBeansProjects/hotel_management/src/ui/Connexion1.java</file>
+            <file>file:/C:/Users/I2S/Documents/NetBeansProjects/hotel_management/src/models/Rooms.java</file>
         </group>
     </open-files>
 </project-private>

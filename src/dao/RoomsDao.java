@@ -17,6 +17,7 @@ import models.Rooms;
 public class RoomsDao {
 
     static final String sql_select = "SELECT * FROM `rooms`";
+    static final String sql_selectwhitroomnumber = "SELECT * FROM `rooms` WHERE room_number=?";
     static final String sql_insert = "INSERT INTO `rooms` ( `room_number`, `room_type`, `status`, `price`, `description`) VALUES ( ?,?,?,?,?)";
     static final String sql_update = "UPDATE `rooms` SET `room_number` = ?, `room_type` = ?, `status` = ?, `price` =?, `description` =? WHERE `rooms`.`room_id` = ?";
     static final String sql_delete = "  DELETE FROM rooms WHERE `rooms`.`room_id` = ?  ";
@@ -41,6 +42,16 @@ public class RoomsDao {
 
         }
         return Rooms;
+
+    }
+    static public Rooms sql_selectwhitroomnumber(Rooms r) throws SQLException, ClassNotFoundException {
+        ResultSet rs = DatabaseService.executeQuery(sql_select,r.getRoom_id());
+       
+        while (rs.next()) {
+            return convertResultSettoRooms(rs);
+
+        }
+        return null;
 
     }
     //    Cette methode permet de modifier une chambre
