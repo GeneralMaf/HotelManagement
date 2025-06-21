@@ -5,7 +5,7 @@
 package dao;
 
 import static dao.ReservationsDao.convertResultsettoreservatiovs;
-import static dao.ReservationsDao.sql_recherchebyname;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

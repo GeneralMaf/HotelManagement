@@ -21,6 +21,7 @@ public class RoomsDao {
     static final String sql_insert = "INSERT INTO `rooms` ( `room_number`, `room_type`, `status`, `price`, `description`) VALUES ( ?,?,?,?,?)";
     static final String sql_update = "UPDATE `rooms` SET `room_number` = ?, `room_type` = ?, `status` = ?, `price` =?, `description` =? WHERE `rooms`.`room_id` = ?";
     static final String sql_delete = "  DELETE FROM rooms WHERE `rooms`.`room_id` = ?  ";
+    static final String sql_selectbystatus= "SELECT * FROM `rooms` WHERE status=?";
     //    Cette methode permet de creer un Rooms
 
     static public Rooms createrooms(Rooms r) throws SQLException, ClassNotFoundException {
@@ -44,6 +45,17 @@ public class RoomsDao {
         return Rooms;
 
     }
+    static public List<Rooms> selectroomsbystatus(String status) throws SQLException, ClassNotFoundException {
+        ResultSet rs = DatabaseService.executeQuery(sql_selectbystatus,status);
+        List<Rooms> Rooms = new ArrayList<>();
+        while (rs.next()) {
+            Rooms.add(convertResultSettoRooms(rs));
+
+        }
+        return Rooms;
+
+    }
+    
     static public Rooms sql_selectwhitroomnumber(Rooms r) throws SQLException, ClassNotFoundException {
         ResultSet rs = DatabaseService.executeQuery(sql_select,r.getRoom_id());
        

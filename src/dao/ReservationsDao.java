@@ -22,7 +22,7 @@ public class ReservationsDao {
     static final String sql_selectbyid = "SELECT * FROM `reservations where reservation_id=? `";
     static final String sql_update = "UPDATE `reservations` SET `user_id` = ?, `client_name` = ?, `client_email` = ?, `client_phone` = ?, `room_id` = ?, `check_in_date` = ?, `check_out_date` = ?, `status` =? WHERE `reservations`.`reservation_id` =?";
     static final String sql_delete = " DELETE FROM reservations WHERE `reservations`.`reservation_id` = ?";
-    static final String sql_recherchebyname = "SELECT * FROM `reservations` WHERE client_name LIKE '%?%'";
+    static final String sql_recherchebyemail = "SELECT * FROM `reservations` WHERE client_email =?";
 
     //    cette methode permet de creer une reservation
     static public Reservations cratereservation(Reservations r) throws SQLException, ClassNotFoundException {
@@ -68,8 +68,8 @@ public class ReservationsDao {
         return DatabaseService.executeUpdate(sql_delete, r.getReservation_id());
     }
 
-    public static Reservations rechercherchereservationbynameclient(String name) throws SQLException, ClassNotFoundException {
-        ResultSet rs = DatabaseService.executeQuery(sql_recherchebyname, name);
+    public static Reservations rechercherchereservationbyemailclient(String name) throws SQLException, ClassNotFoundException {
+        ResultSet rs = DatabaseService.executeQuery(sql_recherchebyemail,name);
         if (rs.next()) {
             return convertResultsettoreservatiovs(rs);
         }
