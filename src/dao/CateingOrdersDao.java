@@ -33,9 +33,7 @@ public class CateingOrdersDao {
 
     public static CateringOrders createMenu(CateringOrders co) throws SQLException, ClassNotFoundException {
         java.sql.Date sqlDate = java.sql.Date.valueOf(co.getOrder_date());
-        if (co.getStatus() == null) {
-            co.setStatus("pending");  // ou une valeur par défaut appropriée
-        }
+        
         int idinserted = (int) DatabaseService.executeInsertWithGeneratedKey(sql_insert, co.getReservation_id(), co.getMenu_item_id(), co.getQuantity(), sqlDate, co.getStatus());
         co.setOrder_id(idinserted);
         return co;

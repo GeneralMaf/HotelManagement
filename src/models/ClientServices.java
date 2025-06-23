@@ -4,6 +4,7 @@
  */
 package models;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -15,11 +16,11 @@ public class ClientServices {
     private int reservation_id ;
     private String service_type ;
     private String 	status ;
-    private Date request_date ;
-    private Date 	completion_date ;
+    private LocalDate request_date ;
+    private LocalDate 	completion_date ;
     private String description ;
 
-    public ClientServices(int reservation_id, String service_type, String status, Date request_date, Date completion_date, String description) {
+    public ClientServices(int reservation_id, String service_type, String status, LocalDate request_date, LocalDate completion_date, String description) {
         this.reservation_id = reservation_id;
         this.service_type = service_type;
         this.status = status;
@@ -28,7 +29,7 @@ public class ClientServices {
         this.description = description;
     }
 
-    public ClientServices(int service_id, int reservation_id, String service_type, String status, Date request_date, Date completion_date, String description) {
+    public ClientServices(int service_id, int reservation_id, String service_type, String status, LocalDate request_date, LocalDate completion_date, String description) {
         this.service_id = service_id;
         this.reservation_id = reservation_id;
         this.service_type = service_type;
@@ -70,19 +71,19 @@ public class ClientServices {
         this.status = status;
     }
 
-    public Date getRequest_date() {
+    public LocalDate getRequest_date() {
         return request_date;
     }
 
-    public void setRequest_date(Date request_date) {
+    public void setRequest_date(LocalDate request_date) {
         this.request_date = request_date;
     }
 
-    public Date getCompletion_date() {
+    public LocalDate getCompletion_date() {
         return completion_date;
     }
 
-    public void setCompletion_date(Date completion_date) {
+    public void setCompletion_date(LocalDate completion_date) {
         this.completion_date = completion_date;
     }
 

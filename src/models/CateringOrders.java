@@ -24,6 +24,7 @@ public class CateringOrders {
         this.menu_item_id = menu_item_id;
         this.quantity = quantity;
         this.order_date = order_date;
+        this.status=status;
     }
 
     public CateringOrders(int order_id, int reservation_id, int menu_item_id, int quantity, LocalDate order_date, String status) {
@@ -32,6 +33,7 @@ public class CateringOrders {
         this.menu_item_id = menu_item_id;
         this.quantity = quantity;
         this.order_date = order_date;
+        this.status=status;
     }
 
     public String getStatus() {

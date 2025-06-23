@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import models.Users;
+import ui.cateing.RestaurationCateing;
 
 /**
  *
@@ -176,7 +177,8 @@ public class Connexion1 extends javax.swing.JFrame {
                         } else if (u.getRole().equals("manager")) {
 
                         } else if (u.getRole().equals("catering")) {
-
+                            this.setVisible(false);
+                            new RestaurationCateing(u).setVisible(true);
                         }
                     } else {
                         JOptionPane.showMessageDialog(this, "Erreur au niveau du mot de passe");

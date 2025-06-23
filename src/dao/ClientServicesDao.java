@@ -5,6 +5,7 @@
 package dao;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import models.ClientServices;
@@ -24,14 +25,20 @@ public class ClientServicesDao {
 //Cette methode permet de creer une service pour un client
 
     static public ClientServices createClientServices(ClientServices cs) throws SQLException, ClassNotFoundException {
-        long idinserted = DatabaseService.executeInsertWithGeneratedKey(sql_insert, cs.getReservation_id(), cs.getService_type(), cs.getStatus(), cs.getRequest_date(), cs.getCompletion_date(), cs.getDescription());
+         java.sql.Date sqlDate = java.sql.Date.valueOf(cs.getRequest_date());
+         java.sql.Date sqlDate1 = java.sql.Date.valueOf(cs.getCompletion_date());
+        long idinserted = DatabaseService.executeInsertWithGeneratedKey(sql_insert, cs.getReservation_id(), cs.getService_type(), cs.getStatus(),sqlDate, sqlDate1, cs.getDescription());
         cs.setService_id((int) idinserted);
         return cs;
     }
 //Cette methode permet de convertir un ResultSet a un ClientServices
 
     static public ClientServices convertResultSettoClientServices(ResultSet rs) throws SQLException {
-        return new ClientServices(rs.getInt("service_id "), rs.getInt("reservation_id"), rs.getString("ervice_type"), rs.getString("status"), rs.getDate("request_date"), rs.getDate("completion_date"), rs.getString("description"));
+        java.sql.Date d = rs.getDate("request_date");
+        LocalDate localDate = d.toLocalDate();
+        java.sql.Date d1 = rs.getDate("completion_date");
+        LocalDate localDate1 = d1.toLocalDate();
+        return new ClientServices(rs.getInt("service_id "), rs.getInt("reservation_id"), rs.getString("ervice_type"), rs.getString("status"),localDate, localDate1, rs.getString("description"));
     }
     //Cette methode permet de  lister la liste des reservations
 

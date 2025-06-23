@@ -19,7 +19,7 @@ import models.Users;
 public class UsersDao {
     static final String sql_insert="INSERT INTO `users` ( `username`, `password`, `role`, `full_name`, `email`, `phone`) VALUES ( ?, ?,?,?,?,?);";
     static final String sql_select="SELECT * FROM `users` WHERE 1";
-    static final String sql_selectbyusername="SELECT * FROM `users` WHERE username = ?";
+    static final String sql_selectbyusername="SELECT * FROM `users` WHERE username  = ?";
     static final String sql_update="UPDATE `users` SET `username` = ?, `password` = ?, `full_name` = ?, `email` = ?, `phone` = ? WHERE `users`.`user_id` = ?;";
     static final String sql_recherchebyname = "SELECT * FROM `users` WHERE full_name LIKE '%?%'";
     //    Cette methode permet de creer d'utilisateur
