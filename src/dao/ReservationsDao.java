@@ -19,14 +19,14 @@ public class ReservationsDao {
 
     static final String sql_insert = "INSERT INTO `reservations` (`user_id`, `client_name`, `client_email`, `client_phone`, `room_id`, `check_in_date`, `check_out_date`, `status`) VALUES (?, ?,?,? ,?, ?,?,?)";
     static final String sql_select = "SELECT * FROM `reservations`";
-    static final String sql_selectbyid = "SELECT * FROM `reservations where reservation_id=? `";
+    static final String sql_selectbyid = "SELECT * FROM `reservations` where  `reservation_id` = ? ";
     static final String sql_update = "UPDATE `reservations` SET `user_id` = ?, `client_name` = ?, `client_email` = ?, `client_phone` = ?, `room_id` = ?, `check_in_date` = ?, `check_out_date` = ?, `status` =? WHERE `reservations`.`reservation_id` =?";
     static final String sql_delete = " DELETE FROM reservations WHERE `reservations`.`reservation_id` = ?";
     static final String sql_recherchebyemail = "SELECT * FROM `reservations` WHERE client_email =?";
 
     //    cette methode permet de creer une reservation
     static public Reservations cratereservation(Reservations r) throws SQLException, ClassNotFoundException {
-        long idinserted = DatabaseService.executeInsertWithGeneratedKey(sql_insert, r.getUser_id(), r.getClient_name(), r.getClient_email(), r.getClient_phone(), r.getRoom_id(), r.getCheck_in_date(), r.getCheck_out_date(),r.getStatus());
+        long idinserted = DatabaseService.executeInsertWithGeneratedKey(sql_insert, r.getUser_id(), r.getClient_name(), r.getClient_email(), r.getClient_phone(), r.getRoom_id(), r.getCheck_in_date(), r.getCheck_out_date(), r.getStatus());
         r.setReservation_id((int) idinserted);
         return r;
     }
@@ -48,9 +48,9 @@ public class ReservationsDao {
     }
 //Cette methode permet d'afficher un reservation
 
-    public static Reservations getreservationsbyid() throws SQLException, ClassNotFoundException {
-        ResultSet rs = DatabaseService.executeQuery(sql_select);
-        List<Reservations> reservations = new ArrayList<>();
+    public static Reservations getreservationsbyid(int idr) throws SQLException, ClassNotFoundException {
+        ResultSet rs = DatabaseService.executeQuery(sql_selectbyid, idr);
+
         if (rs.next()) {
             return convertResultsettoreservatiovs(rs);
         }
@@ -69,7 +69,7 @@ public class ReservationsDao {
     }
 
     public static Reservations rechercherchereservationbyemailclient(String name) throws SQLException, ClassNotFoundException {
-        ResultSet rs = DatabaseService.executeQuery(sql_recherchebyemail,name);
+        ResultSet rs = DatabaseService.executeQuery(sql_recherchebyemail, name);
         if (rs.next()) {
             return convertResultsettoreservatiovs(rs);
         }

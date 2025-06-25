@@ -4,12 +4,15 @@
  */
 package ui.cateing;
 
+import dao.CateingOrdersDao;
 import dao.MenuDao;
 import dao.ReservationsDao;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import models.CateringOrders;
 import models.Menu;
 import models.Reservations;
 import models.Users;
@@ -27,28 +30,33 @@ public class RestaurationCateing extends javax.swing.JFrame {
      * Creates new form RestaurationCateing
      */
     Users u1;
-    Menu m;
+    CateringOrders co;
+
     public RestaurationCateing() {
         initComponents();
-         getrestaurations();
+        getrestaurations();
         getformulaire();
     }
+
     public RestaurationCateing(Users u) {
         initComponents();
-         getrestaurations();
+        getrestaurations();
         getformulaire();
-        u1=u;
+        u1 = u;
     }
+    
+
     private void getrestaurations() {
         try {
-            List<Menu> meus = MenuDao.selectMenu();
-            UtilsFonction.displayDataInTable(meus, tablemenu, List.of("menu_item_id"));
+            List<CateringOrders> cateingorders = CateingOrdersDao.selectMenu();
+            UtilsFonction.displayDataInTable(cateingorders, tablemenu, List.of("menu_item_id","reservation_id","order_id"));
         } catch (SQLException ex) {
             Logger.getLogger(Restauration.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Restauration.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     private void getformulaire() {
         tablemenu.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
@@ -56,20 +64,23 @@ public class RestaurationCateing extends javax.swing.JFrame {
                 if (selectedRow != -1) {
 
                     try {
-                        List<Reservations> reservations = ReservationsDao.getreservations();
-                        clientcb.removeAllItems();
-                        for (Reservations i : reservations) {
-                            clientcb.addItem(i.getClient_email());
-                        }
-                        List<Menu> mylist = MenuDao.selectMenu();
-                        m = mylist.get(selectedRow);
-                        if (m != null) {
-                            itemnametf.setText(m.getItem_name());
-                            categorytf.setText(m.getCategory());
+                        Reservations reservation;
+                        Menu m;
 
-                            pricetf.setText(String.valueOf(m.getPrice()));
-                            stoctquantytf.setText(String.valueOf(m.getStock_quantity()));
-                            desctf.setText(m.getDescription());
+                        List<CateringOrders> mylist = CateingOrdersDao.selectMenu();
+                        co = mylist.get(selectedRow);
+                        if (co != null) {
+                            reservation = ReservationsDao.getreservationsbyid(co.getReservation_id());
+                            m = MenuDao.selectMenubyid(co.getMenu_item_id());
+                            if (m != null && reservation != null) {
+
+                                itemnametf.setText(m.getItem_name());
+                                pricetf.setText(String.valueOf(m.getPrice()));
+                                desctf.setText(m.getDescription());
+                                emailtf.setText(reservation.getClient_email());
+                                stoctquantytf.setText(String.valueOf(co.getQuantity()));
+                                categorytf.setText(m.getCategory());
+                            }
 
                         }
 
@@ -93,6 +104,7 @@ public class RestaurationCateing extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        customUI1 = new necesario.CustomUI();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablemenu = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
@@ -108,8 +120,8 @@ public class RestaurationCateing extends javax.swing.JFrame {
         stoctquantytf = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         desctf = new javax.swing.JTextArea();
-        clientcb = new javax.swing.JComboBox<>();
         d1 = new javax.swing.JLabel();
+        emailtf = new javax.swing.JTextField();
         jButton11 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -174,7 +186,8 @@ public class RestaurationCateing extends javax.swing.JFrame {
                                     .addComponent(itemnametf, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(pricetf, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(stoctquantytf, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(emailtf, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(d, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -183,8 +196,7 @@ public class RestaurationCateing extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(d1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(99, 99, 99)
-                        .addComponent(clientcb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton5)))
@@ -218,9 +230,10 @@ public class RestaurationCateing extends javax.swing.JFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(42, 42, 42)
-                        .addComponent(clientcb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(d1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(64, 64, 64))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(d1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(emailtf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(44, 44, 44)
                 .addComponent(jButton5)
                 .addContainerGap(17, Short.MAX_VALUE))
@@ -266,12 +279,31 @@ public class RestaurationCateing extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-       
+     
+        try {
+            if(co.getStatus().equals("pending")){
+            int row=CateingOrdersDao.updateMenuStatus(co);
+            if(row>0){
+            JOptionPane.showMessageDialog(this, "Commande livrer");
+            getrestaurations();
+            }else{
+            JOptionPane.showMessageDialog(this, "Une erreur est survenue");
+            }
+            }else{
+            JOptionPane.showMessageDialog(this, "Commande deja livrer");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RestaurationCateing.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RestaurationCateing.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+      
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         this.setVisible(false);
-      
+        new Addmenu(u1).setVisible(true);
     }//GEN-LAST:event_jButton11ActionPerformed
 
     /**
@@ -312,10 +344,11 @@ public class RestaurationCateing extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel a;
     private javax.swing.JTextField categorytf;
-    private javax.swing.JComboBox<String> clientcb;
+    private necesario.CustomUI customUI1;
     private javax.swing.JLabel d;
     private javax.swing.JLabel d1;
     private javax.swing.JTextArea desctf;
+    private javax.swing.JTextField emailtf;
     private javax.swing.JTextField itemnametf;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton5;

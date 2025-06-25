@@ -28,6 +28,7 @@ public class CateingOrdersDao {
     public static final String sql_select = "SELECT * FROM `catering_orders` WHERE 1";
     public static final String sql_insert = "INSERT INTO `catering_orders` (`reservation_id`, `menu_item_id`, `quantity`,`order_date`, `status`) VALUES (?,?,?,?,?)";
     public static final String sql_update = "UPDATE `catering_orders` SET `reservation_id` = ?, `menu_item_id` = ?, `quantity` = ?, `status` = ? WHERE `catering_orders`.`order_id` =?";
+    public static final String sql_updatestatus = "UPDATE `catering_orders` SET `status` = 'delivered' WHERE `catering_orders`.`order_id` = ?";
     public static final String sql_delete = "DELETE FROM catering_orders WHERE `catering_orders`.`order_id` = ?";
     //    Cette methode permet de creer un service
 
@@ -44,7 +45,7 @@ public class CateingOrdersDao {
         java.sql.Date d = rs.getDate("order_date");
         LocalDate localDate = d.toLocalDate();
 
-        return new CateringOrders(rs.getInt("order_id"), rs.getInt("reservation_id "), rs.getInt("menu_item_id"), rs.getInt("quantity"), localDate, rs.getString("status"));
+        return new CateringOrders(rs.getInt("order_id"), rs.getInt("reservation_id"), rs.getInt("menu_item_id"), rs.getInt("quantity"), localDate, rs.getString("status"));
     }
     //    Cette methode permet d'afficher la liste des services
 
@@ -62,6 +63,11 @@ public class CateingOrdersDao {
     public static int updateMenu(CateringOrders co) throws SQLException, ClassNotFoundException {
 
         return DatabaseService.executeUpdate(sql_update, co.getReservation_id(), co.getMenu_item_id(), co.getQuantity(), co.getStatus(), co.getOrder_id());
+
+    }
+    public static int updateMenuStatus(CateringOrders co) throws SQLException, ClassNotFoundException {
+
+        return DatabaseService.executeUpdate(sql_updatestatus, co.getOrder_id());
 
     }
     //    Cette methode permet de supprimer une service

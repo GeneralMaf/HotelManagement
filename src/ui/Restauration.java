@@ -261,7 +261,7 @@ public class Restauration extends javax.swing.JFrame {
 
         a.setText("category");
 
-        s.setText("stock_quantity");
+        s.setText("Quantite");
 
         q.setText("price");
 
@@ -303,7 +303,7 @@ public class Restauration extends javax.swing.JFrame {
                                     .addComponent(pricetf, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(stoctquantytf, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 3, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(d, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -429,12 +429,19 @@ public class Restauration extends javax.swing.JFrame {
 
             Reservations res = ReservationsDao.rechercherchereservationbyemailclient(clientcb.getSelectedItem().toString());
             if (res != null) {
-                CateringOrders c = new CateringOrders(res.getReservation_id(), m.getMenu_item_id(), m.getStock_quantity(), LocalDate.now(),"pending");
-                CateringOrders c1 = CateingOrdersDao.createMenu(c);
-                if (c1.getOrder_id() > 0) {
-                    JOptionPane.showConfirmDialog(this, "La commande est en cour de preparation");
-                } else {
-                    JOptionPane.showConfirmDialog(this, "Une erreur est survenu");
+                int qtt = 0;
+                if (Integer.parseInt(stoctquantytf.getText().toString()) <= m.getStock_quantity()) {
+                    qtt = Integer.parseInt(stoctquantytf.getText().toString());
+
+                    CateringOrders c = new CateringOrders(res.getReservation_id(), m.getMenu_item_id(), qtt, LocalDate.now(), "pending");
+                    CateringOrders c1 = CateingOrdersDao.createMenu(c);
+                    if (c1.getOrder_id() > 0) {
+                        JOptionPane.showConfirmDialog(this, "La commande est en cour de preparation");
+                    } else {
+                        JOptionPane.showConfirmDialog(this, "Une erreur est survenu");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(this,"Veuillez mettre une quantite inferieur au seuil");
                 }
             } else {
                 JOptionPane.showConfirmDialog(this, "Une erreur est survenu");

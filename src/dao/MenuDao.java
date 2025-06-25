@@ -16,6 +16,7 @@ import models.Menu;
 public class MenuDao {
 
     public static final String sql_select = "SELECT * FROM `menu`";
+    public static final String sql_selectbyid = "SELECT * FROM `menu` WHERE menu_item_id=?";
     public static final String sql_insert = "INSERT INTO `menu` (`item_name`, `category`, `price`, `stock_quantity`, `description`) VALUES (?,?, ?,?, ?);";
     public static final String sql_update = "UPDATE `menu` SET `item_name` = ?, `category` = ?, `price` = ?, `stock_quantity` = ?, `description` = ? WHERE `menu`.`menu_item_id` = ?;";
     public static final String sql_delete = " DELETE FROM menu WHERE `menu`.`menu_item_id` = ?";
@@ -42,6 +43,15 @@ public class MenuDao {
             myList.add(convertResultSettoMenu(rs));
         }
         return myList;
+    }
+    public static Menu selectMenubyid(int idm) throws SQLException, ClassNotFoundException {
+
+        ResultSet rs = DatabaseService.executeQuery(sql_selectbyid,idm);
+        
+        while (rs.next()) {
+            return convertResultSettoMenu(rs);
+        }
+        return null;
     }
     //    Cette methode permet de modifier un menu
 
