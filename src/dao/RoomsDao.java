@@ -78,8 +78,8 @@ public class RoomsDao {
 
     }
     //    Cette methode permet de modifier une chambre
-    static final int updateRomm(Rooms r) throws SQLException, ClassNotFoundException{
-    return DatabaseService.executeUpdate(sql_update,r.getRoom_number(),r.getRoom_type(),r.getStatus(),r.getPrice(),r.getDescription());
+    static public int updateRomm(Rooms r) throws SQLException, ClassNotFoundException{
+    return DatabaseService.executeUpdate(sql_update,r.getRoom_number(),r.getRoom_type(),r.getStatus(),r.getPrice(),r.getDescription(),r.getRoom_id());
     
     }
      //    Cette methode permet de supprimer une chambre

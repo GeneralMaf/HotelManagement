@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import models.Users;
 import ui.cateing.RestaurationCateing;
+import ui.manager.DashbordManager;
 
 /**
  *
@@ -168,14 +169,16 @@ public class Connexion1 extends javax.swing.JFrame {
                 if (u != null) {
 
                     if (UtilsFonction.decrypt(u.getPassword()).equals(passwordtf.getText().toString())) {
-                        
-                        if (u.getRole().equals("receptionist")) {
-                            JOptionPane.showMessageDialog(this,"Conn");
-                            this.setVisible(false);
-                           new Dashboard(u).setVisible(true);
-                           
-                        } else if (u.getRole().equals("manager")) {
 
+                        if (u.getRole().equals("receptionist")) {
+                            JOptionPane.showMessageDialog(this, "Conn");
+                            this.setVisible(false);
+                            new Dashboard(u).setVisible(true);
+
+                        } else if (u.getRole().equals("manager")) {
+                            this.setVisible(false);
+                            new DashbordManager(u).setVisible(true);
+                        
                         } else if (u.getRole().equals("catering")) {
                             this.setVisible(false);
                             new RestaurationCateing(u).setVisible(true);

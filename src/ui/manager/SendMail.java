@@ -24,7 +24,7 @@ public class SendMail extends javax.swing.JFrame {
     public SendMail() {
         initComponents();
     }
-   public static void sendEmail(String recipientEmail, String username) throws MessagingException {
+   public static void sendEmail(String recipientEmail, String username,String Password) throws MessagingException {
         // Configurer les propriétés pour JavaMail
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -36,7 +36,7 @@ public class SendMail extends javax.swing.JFrame {
         Session session = Session.getInstance(props, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("mafall.cisse1@unchk.edu.sn","Mafall@78"); // Remplace par ton email et mot de passe
+                return new PasswordAuthentication("mafall.cisse1@unchk.edu.sn","sdtd goaf yocw msef"); // Remplace par ton email et mot de passe
             }
         });
 
@@ -45,7 +45,7 @@ public class SendMail extends javax.swing.JFrame {
         message.setFrom(new InternetAddress("mafall.cisse1@unchk.edu.sn"));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
         message.setSubject("Bienvenue dans le système de gestion immobilière");
-        message.setText("Votre nom d'utilisateur est : " + username + "\nVeuillez vous connecter à http://votreapp.com/login");
+        message.setText("Votre nom d'utilisateur est : " + username + "votre mot de passe est "+Password);
 
         // Envoyer l'email
         Transport.send(message);
@@ -118,11 +118,7 @@ public class SendMail extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        try {       
-            sendEmail(mailtf.getText().toString(), usernametf.getText().toString());
-        } catch (MessagingException ex) {
-            Logger.getLogger(SendMail.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
